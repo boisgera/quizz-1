@@ -1,102 +1,151 @@
 import marimo
 
-__generated_with = "0.9.14"
+__generated_with = "0.9.15"
 app = marimo.App(width="medium")
 
 
 @app.cell
 def __(mo):
-    mo.md("""# Mines AP 2024-2025 Groupe 6 - Quizz 0""")
+    mo.md("""# Mines AP 2024-2025 Groupe 6 - Quizz 1""")
     return
 
 
 @app.cell
 def __(mo):
-    radiogroup = mo.ui.radio(
-        options={"I don't know": None, "one": 1, "two": 2, "three": 3},
-        value="I don't know",
-        label="pick a number",
+    widget_1 = mo.ui.radio(
+        options={"?": None, "CLI": 1, "TUI": 2, "GUI": 3, "FBI": 4},
+        value="?",
     )
 
-    mo.md(f"""
+    comments_1 = mo.ui.text_area(debounce=False)
 
-    ## Question 1
+    mo.md(f"""## Question 1
 
-    What's your favorite number?
+    L'acronyme (🇺🇸) désignant un programme "en ligne de commande", destiné à être utilisé dans un terminal est :
 
+    {widget_1}
 
-    {radiogroup}
+    Commentaires:
+
+    {comments_1}
+
     """)
-    return (radiogroup,)
-
-
-@app.cell(hide_code=True)
-def __(mo):
-    checkboxes = mo.ui.array([mo.ui.checkbox()] * 3)
-    return (checkboxes,)
+    return comments_1, widget_1
 
 
 @app.cell
-def __(checkboxes, mo):
+def __(mo):
+    widget_2 = mo.ui.radio(
+        options={
+            "?": None,
+            "hello.py": 1,
+            "python hello.py": 2,
+            "pixi hello.py": 3,
+            "pixi python hello.py": 3,
+            "pixi run python hello.py": 4,
+            "pixi run python run hello.py": 5,
+        },
+        value="?",
+    )
+
+
+    comments_2 = mo.ui.text_area(debounce=False)
+
+
     mo.md(f"""
     ## Question 2
 
-    Multiple answers:
+    Pour exécuter le programme `hello.py` du répertoire courant avec l'interpréteur Python fourni par `pixi`, vous tapez la commande :
 
-      - {checkboxes[0]} Choice 1
+    {widget_2} 
 
-      - {checkboxes[1]} Choice 2
-        
-      - {checkboxes[2]} Choice 3
+    Commentaires :
+
+    {comments_2}
+
 
 
     """)
-    return
+    return comments_2, widget_2
 
 
 @app.cell
 def __(mo):
-    text = mo.ui.text(label="Type a short text here:", debounce=False)
+    widget_3 = mo.ui.text_area(debounce=False)
+
+    comments_3 = mo.ui.text_area(debounce=False)
+
+
     mo.md(f"""
     ## Question 3
 
-    {text}
+    Quelle est la fonction de la commande `which` (en bash) ou `Get-Command` (avec powershell) ?
+
+    Réponse :
+    {widget_3}
+
+    Commentaires :
+    {comments_3}
     """)
-    return (text,)
+    return comments_3, widget_3
 
 
 @app.cell
 def __(mo):
-    text_area = mo.ui.text_area(debounce=False)
-    return (text_area,)
+    widget_4 = mo.ui.array([mo.ui.checkbox()] * 3)
+    comments_4 = mo.ui.text_area(debounce=False)
 
+    mo.md(
+        f"""## Question 4
 
-@app.cell
-def __(mo, text_area):
-    mo.md(f"""
-    ## Question 4
+    Pour permettre à une personne de reconstituer exactement sur sa machine l'environnement pixi de mon projet, je partage avec elle
 
-    Type a multiline text:
-    {text_area}
-    """)
-    return
+     - {widget_4[0]} mon dossier `.pixi`
+
+     - {widget_4[1]} mon fichier `pixi.lock`
+
+     - {widget_4[2]} mon fichier `pixi.toml`
+
+    Commentaires :
+
+    {comments_4}
+
+    """
+    )
+    return comments_4, widget_4
 
 
 @app.cell
 def __(mo):
-    code = mo.ui.code_editor(language="python", value="if True:\n    pass", min_height=100)
-    return (code,)
+    widget_5 = mo.ui.radio(
+        options={
+            "?": None,
+            "dans le répertoire courant": 1,
+            "dans le repertoire 'C:\Program Files' pour Windows ou '/usr/bin' sur Linux et OSX": 2,
+            "dans la liste de répertoires spécifiée par la variable d'environnement PATH": 3,
+            "dans tout le système de fichiers": 4,
+        },
+        value="?",
+    )
+
+    comments_5 = mo.ui.text_area(debounce=False)
 
 
-@app.cell
-def __(code, mo):
     mo.md(f"""
     ## Question 5
 
-    Type some Python code here:
-    {code}
+    Lorsque je tape `firefox` dans mon terminal, le système recherche un fichier exécutable du même nom
+
+    {widget_5}
+
+
+    Commentaires :
+
+    {comments_5}
+
+
     """)
-    return
+    return comments_5, widget_5
 
 
 @app.cell
@@ -118,16 +167,33 @@ def __():
     return (mo,)
 
 
-@app.cell
-def __(checkboxes, code, pprint, radiogroup, text, text_area):
-    widgets = [radiogroup, checkboxes, text, text_area, code]
-    answer = pprint.pformat({f"Question {i+1}": widget.value for i, widget in enumerate(widgets)}, indent=4)
-    return answer, widgets
+@app.cell(hide_code=True)
+def __(
+    comments_1,
+    comments_2,
+    comments_3,
+    comments_4,
+    comments_5,
+    pprint,
+    widget_1,
+    widget_2,
+    widget_3,
+    widget_4,
+    widget_5,
+):
+    widgets = [widget_1, widget_2, widget_3, widget_4, widget_5]
+    comments = [comments_1, comments_2, comments_3, comments_4, comments_5]
+    answer = pprint.pformat([
+        {f"Question {i+1}": widget.value, f"Comment {i+1}": comment.value} for i, (widget, comment) in enumerate(zip(widgets, comments))
+    ], indent=4)
+
+
+    return answer, comments, widgets
 
 
 @app.cell
 def __(mo):
-    autosave = mo.ui.checkbox(label="autosave", value=True)
+    autosave = mo.ui.checkbox(label="autosave to answer.py", value=True)
     autosave
     return (autosave,)
 
