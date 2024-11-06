@@ -1,0 +1,14 @@
+[project]
+authors = ["Sébastien Boisgérault <Sebastien.Boisgerault@gmail.com>"]
+channels = ["conda-forge"]
+description = "Quizz 1"
+name = "Quizz 1"
+platforms = ["linux-64", "win-64", "osx-64", "osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+start = "marimo run quizz.py"
+dev = "marimo edit quizz.py"
+
+[dependencies]
+marimo = ">=0.9.14,<0.10"
