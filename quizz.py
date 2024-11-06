@@ -121,7 +121,7 @@ def __(mo):
         options={
             "?": None,
             "dans le répertoire courant": 1,
-            "dans le repertoire 'C:\Program Files' pour Windows ou '/usr/bin' sur Linux et OSX": 2,
+            "dans le répertoire 'C:\Program Files' pour Windows ou '/usr/bin' sur Linux et OSX": 2,
             "dans la liste de répertoires spécifiée par la variable d'environnement PATH": 3,
             "dans tout le système de fichiers": 4,
         },
