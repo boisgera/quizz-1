@@ -1,4 +1,4 @@
-# Quizz 0
+# Quizz 1
 
 First, install [pixi].
 
